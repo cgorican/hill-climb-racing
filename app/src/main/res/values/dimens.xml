@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- PADDING -->
+    <dimen name="padding_std">20dp</dimen>
+    <dimen name="padding_half">10dp</dimen>
+    <dimen name="padding_min">5dp</dimen>
+    <!-- MARGIN -->
+    <dimen name="margin_std">20dp</dimen>
+    <dimen name="margin_half">10dp</dimen>
+    <dimen name="margin_min">5dp</dimen>
+
+    <!-- TEXT SIZE -->
+    <dimen name="text_size_h1">22sp</dimen>
+    <dimen name="text_size_h2">18sp</dimen>
+    <dimen name="text_size_std">16sp</dimen>
+</resources>

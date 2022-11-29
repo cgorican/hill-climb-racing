@@ -1,14 +1,37 @@
 <resources>
     <string name="app_name">HillClimbRacing</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_input">InputActivity</string>
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign in or register</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="welcome">"Welcome !"</string>
-    <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
-    <string name="login_failed">"Login failed"</string>
+    <!-- TITLES -->
+    <string name="title_tracks">Tracks</string>
+
+    <!-- h1 -->
+    <string name="h1_profile_setup">Profile setup</string>
+
+    <!-- BUTTONS -->
+    <string name="btn_confirm">Confirm</string>
+
+    <!-- LABELS -->
+    <string name="label_firstname">Firstname</string>
+    <string name="label_lastname">Lastname</string>
+    <string name="label_email">Email</string>
+    <string name="label_birthdate">Birthdate</string>
+
+    <!-- HINTS -->
+    <string name="hint_firstname">Janez</string>
+    <string name="hint_lastname">Novak</string>
+    <string name="hint_email">janez.novak@gmail.com</string>
+    <string name="hint_birthdate">01/01/2000</string>
+
+    <!-- ERROR MESSAGES -->
+    <string name="invalid_first_name">Not a valid firstname</string>
+    <string name="invalid_last_name">Not a valid lastname</string>
+    <string name="invalid_email">Not a valid email</string>
+    <string name="invalid_birthdate">Not a valid birthdate</string>
+    <string name="empty_fields">Fill out the fields!</string>
+
+    <!-- SHARED PREFS -->
+    <string name="path_shared_pref" translatable="false">ShrPref</string>
+    <string name="shrpref_session_id" translatable="false">ShrPref</string>
+
+    <!-- AUTO GENERATED -->
+    <string name="hello_blank_fragment"></string>
 </resources>

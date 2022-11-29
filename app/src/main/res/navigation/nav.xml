@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav"
+    app:startDestination="@id/mainFragment">
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="si.um.feri.hillclimbracing.MainFragment"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_mainFragment_to_mapsFragment"
+            app:destination="@id/mapsFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_trackInputFragment"
+            app:destination="@id/trackInputFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_trackFragment"
+            app:destination="@id/trackFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_racerFragment"
+            app:destination="@id/racerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mapsFragment"
+        android:name="si.um.feri.hillclimbracing.MapsFragment"
+        android:label="fragment_maps"
+        tools:layout="@layout/fragment_maps" >
+        <action
+            android:id="@+id/action_mapsFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/racerFragment"
+        android:name="si.um.feri.hillclimbracing.RacerFragment"
+        android:label="fragment_racer"
+        tools:layout="@layout/fragment_racer" >
+        <action
+            android:id="@+id/action_racerFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/trackInputFragment"
+        android:name="si.um.feri.hillclimbracing.TrackInputFragment"
+        android:label="fragment_track_input"
+        tools:layout="@layout/fragment_track_input" >
+        <action
+            android:id="@+id/action_trackInputFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/trackFragment"
+        android:name="si.um.feri.hillclimbracing.TrackFragment"
+        android:label="fragment_track"
+        tools:layout="@layout/fragment_track" >
+        <action
+            android:id="@+id/action_trackFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
+</navigation>
