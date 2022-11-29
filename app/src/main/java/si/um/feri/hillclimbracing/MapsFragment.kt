@@ -24,8 +24,9 @@ class MapsFragment : Fragment(R.layout.fragment_maps) {
          */
         val f103 = LatLng(46.559102, 15.639008)
         //googleMap.addMarker(MarkerOptions().position(f103).title("FERI F103"))
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(f103))
-        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(f103, 14f))
+        //googleMap.moveCamera(CameraUpdateFactory.newLatLng(f103))
+        //googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(f103, 14f))
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(f103, 14f))
     }
 
     override fun onCreateView(
@@ -38,7 +39,7 @@ class MapsFragment : Fragment(R.layout.fragment_maps) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
+        val mapFragment = childFragmentManager.findFragmentById(R.id.mapsFragment) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
     }
 }

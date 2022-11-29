@@ -2,6 +2,9 @@
     <string name="app_name">HillClimbRacing</string>
     <!-- TITLES -->
     <string name="title_tracks">Tracks</string>
+    <string name="title_map">Map</string>
+    <string name="title_profile_setup">Setup profile</string>
+    <string name="title_add_track">Add a track</string>
 
     <!-- h1 -->
     <string name="h1_profile_setup">Profile setup</string>
