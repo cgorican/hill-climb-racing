@@ -9,6 +9,7 @@ import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ProcessLifecycleOwner
 import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import java.io.File
 import java.io.FileReader
 import java.util.*
@@ -32,7 +33,52 @@ class HCRApplication : Application(), DefaultLifecycleObserver {
         editor = sharedPref.edit()
         setSessionId()
 
+        gson = Gson()
+        file = File(filesDir, getString(R.string.json_data_path))
+        if(file.exists()) {
+            readJsonFile()
+        }
+
         data = TrackCollection.generateDefault()
+    }
+
+    private fun readJsonFile() {
+        val fileData: TrackCollection? = deserialize()
+        if(fileData != null) data = fileData
+    }
+
+    private fun writeJsonFile() {
+        val jsonString: String? = serialize(data)
+        if(jsonString != null) {
+            file.writeText(jsonString)
+        }
+    }
+
+    fun saveData() = writeJsonFile()
+
+    private fun serialize(value: Any): String? {
+        val gson = GsonBuilder().create()
+        var jsonString: String? = null
+        try {
+            jsonString = gson.toJson(data)
+        }
+        catch(e: Exception) {
+            Log.e(TAG, "Serialization failed")
+        }
+        return jsonString
+    }
+
+    private fun deserialize(): TrackCollection? {
+        if(!file.exists()) return null
+        val fileReader = FileReader(file)
+        var carCollection: TrackCollection? = null
+        try {
+            carCollection = gson.fromJson(fileReader, TrackCollection::class.java)
+        }
+        catch(e: Exception) {
+            Log.e(TAG, "Deserialization failed")
+        }
+        return carCollection
     }
 
     private fun setSessionId() {

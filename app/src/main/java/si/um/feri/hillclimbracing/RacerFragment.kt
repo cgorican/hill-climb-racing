@@ -47,6 +47,7 @@ class RacerFragment : Fragment() {
         _binding?.btnSetRacer!!.setOnClickListener {
             if (submitProfile()) {
                 Log.i(TAG, "Profile updated")
+                app.saveData()
                 Navigation.findNavController(view)
                     .navigate(R.id.action_racerFragment_to_mainFragment)
             }

@@ -31,6 +31,7 @@ class TrackFragment : Fragment() {
     private lateinit var timerTextView: TextView
 
     companion object {
+        // auto-stop after 8h
         val msUntilAutoStop: Long = 8 * 60 * 60 * 1000
     }
 
@@ -116,6 +117,7 @@ class TrackFragment : Fragment() {
 
         _binding!!.btnSubmit.setOnClickListener {
             if(submitScore()) {
+                app.saveData()
                 Navigation.findNavController(view)
                     .navigate(R.id.action_trackFragment_to_mainFragment)
             }

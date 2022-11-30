@@ -67,6 +67,7 @@ class TrackInputFragment : Fragment() {
 
         _binding!!.btnSetTrack.setOnClickListener {
             if (submitTrack()) {
+                app.saveData()
                 Navigation.findNavController(view)
                     .navigate(R.id.action_trackInputFragment_to_mainFragment)
             }

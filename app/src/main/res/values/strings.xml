@@ -66,6 +66,8 @@
     <string name="shr_pref_timer_start" translatable="false">TimerStart</string>
     <string name="shr_pref_timer_running" translatable="false">TimerState</string>
 
+    <string name="json_data_path" translatable="false">hcr_data.json</string>
+
     <!-- AUTO GENERATED -->
-    <string name="hello_blank_fragment" translatable="false"></string>
+    <string name="hello_blank_fragment" translatable="false" />
 </resources>
