@@ -58,7 +58,6 @@ class TrackAdapter(
         val itemView = LayoutInflater
             .from(parent.context)
             .inflate(R.layout.track_card_view, parent, false)
-
         return ViewHolder(itemView)
     }
 

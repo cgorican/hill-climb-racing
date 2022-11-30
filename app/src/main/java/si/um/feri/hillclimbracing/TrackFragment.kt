@@ -69,6 +69,15 @@ class TrackFragment : Fragment() {
             else -> _binding!!.displayDifficulty.background.setTint(requireContext().getColor(R.color.diff_easy))
         }
 
+        // Display banner
+        Picasso.get()
+            .load("https://www.liveabout.com/thmb/3hOYoLBcmnd5Rd_JRCSSZoIlE44=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/MontBlancRegion_BuenaVistaImages_Getty1-56a16aee3df78cf7726a89cf.jpg")
+            .placeholder(R.drawable.ic_question_mark)
+            .error(R.drawable.ic_question_mark)
+            .fit() // fit image into imageView
+            .centerCrop()   //.centerInside()
+            .noFade() // disable fade animation
+            .into(_binding!!.banner)
         /*
         running = app.sharedPref.getBoolean(getString(R.string.shr_pref_timer_running), false)
         if(running) {

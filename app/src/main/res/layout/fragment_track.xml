@@ -10,6 +10,7 @@
         android:id="@+id/banner"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:background="@color/light_gray"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/guideline10"
         app:layout_constraintStart_toStartOf="parent"
