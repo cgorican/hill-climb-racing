@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_tracks">Proge</string>
+    <string name="title_map">Karta</string>
+    <string name="title_profile_setup">Nastavitev profila</string>
+    <string name="title_add_track">Ustvari progo</string>
+    <string name="title_edit_track">Uredi progo</string>
+    <string name="h1_profile_setup">Nastavitev profila</string>
+    <string name="btn_confirm">Potrdi</string>
+    <string name="btn_submit">Potrdi</string>
+    <string name="btn_add">Dodaj</string>
+    <string name="btn_edit">Uredi</string>
+    <string name="btn_start">Začni</string>
+    <string name="btn_reset">Ponastavi</string>
+    <string name="btn_stop">Ustavi</string>
+    <string name="btn_delete">Izbriši</string>
+    <string name="btn_cancel">Prekliči</string>
+    <string name="label_firstname">Ime</string>
+    <string name="label_lastname">Priimek</string>
+    <string name="label_birthdate">Dan rojstva</string>
+    <string name="label_title">Naslov</string>
+    <string name="label_desc">Opis</string>
+    <string name="label_difficulty">Težavnost</string>
+    <string name="label_start_loc">Začetek</string>
+    <string name="label_finish_loc">Cilj</string>
+    <string name="hint_firstname">Janez</string>
+    <string name="hint_lastname">Novak</string>
+    <string name="hint_email">janez.novak@gmail.com</string>
+    <string name="hint_desc">Opis</string>
+    <string name="modal_delete_track_title">Izbriši progo</string>
+    <string name="modal_delete_track_desc">Ali ste prepričani da želite izbrisati %s?</string>
+    <string name="info_timer_usage">Pritisnite na časovnik za začetek/konec</string>
+    <string name="invalid_first_name">Neveljavno ime!</string>
+    <string name="invalid_last_name">Neveljaven priimek!</string>
+    <string name="invalid_email">Neveljaven email!</string>
+    <string name="invalid_birthdate">Neveljaven dan rojstva!</string>
+    <string name="invalid_location_start">Neveljavna začetna lokacija!</string>
+    <string name="invalid_location_finish">Neveljavna ciljna lokacija!</string>
+    <string name="empty_fields">Izpolnite polja!</string>
+    <string name="profile_not_set_up">Potrebna vzpostavitev profila!</string>
+</resources>

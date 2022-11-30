@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
+import com.squareup.picasso.Picasso
 import si.um.feri.hillclimbracing.databinding.FragmentTrackBinding
 import si.um.feri.hillclimbracing.enums.DifficultyEnum
 import java.time.Duration
@@ -67,7 +68,6 @@ class TrackFragment : Fragment() {
             else -> _binding!!.displayDifficulty.background.setTint(requireContext().getColor(R.color.diff_easy))
         }
 
-
         /*
         running = app.sharedPref.getBoolean(getString(R.string.shr_pref_timer_running), false)
         if(running) {
@@ -83,6 +83,7 @@ class TrackFragment : Fragment() {
         timerTextView.setTextColor(requireContext().getColor(R.color.gray))
         _binding!!.btnTimerReset.setBackgroundColor(requireContext().getColor(R.color.light_gray))
         _binding!!.btnSubmit.visibility = View.INVISIBLE
+        _binding!!.btnTimerReset.isEnabled = false
 
         _binding!!.timer.setOnClickListener {
             if (running) {   // STOP
@@ -103,13 +104,13 @@ class TrackFragment : Fragment() {
         }
 
         _binding!!.btnTimerReset.setOnClickListener {
-            if (!running && end.isAfter(start)) {
+            if (!running && end != LocalDateTime.MIN) {
                 end = LocalDateTime.MIN
                 timerTextView.text = Score.durationToString(Duration.ZERO)
                 timerTextView.setTextColor(requireContext().getColor(R.color.gray))
                 _binding!!.btnTimerReset.setBackgroundColor(requireContext().getColor(R.color.light_gray))
                 _binding!!.btnSubmit.visibility = View.INVISIBLE
-                _binding!!.btnTimerReset.isEnabled = true
+                _binding!!.btnTimerReset.isEnabled = false
             }
         }
 

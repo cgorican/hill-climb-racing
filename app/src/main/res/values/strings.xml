@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">HillClimbRacing</string>
+    <string name="app_name" translatable="false">HillClimbRacing</string>
     <!-- TITLES -->
     <string name="title_tracks">Tracks</string>
     <string name="title_map">Map</string>
@@ -24,7 +24,7 @@
     <!-- LABELS -->
     <string name="label_firstname">Firstname</string>
     <string name="label_lastname">Lastname</string>
-    <string name="label_email">Email</string>
+    <string name="label_email" translatable="false">Email</string>
     <string name="label_birthdate">Birthdate</string>
     <string name="label_title">Title</string>
     <string name="label_desc">Description</string>
@@ -35,12 +35,12 @@
     <!-- HINTS -->
     <string name="hint_firstname">Bob</string>
     <string name="hint_lastname">Smith</string>
-    <string name="hint_email">bob.smith@domain.com</string>
-    <string name="hint_birthdate">19/04/2001</string>
-    <string name="hint_track_title">Piramida</string>
+    <string name="hint_email">bob.smith@gmail.com</string>
+    <string name="hint_birthdate" translatable="false">19/04/2001</string>
+    <string name="hint_track_title" translatable="false">Piramida</string>
     <string name="hint_desc">Description</string>
-    <string name="hint_loc">46.55/15.63</string>
-    <string name="hint_loc2">46.59/15.43</string>
+    <string name="hint_loc" translatable="false">46.55/15.63</string>
+    <string name="hint_loc2" translatable="false">46.59/15.43</string>
 
     <!-- MODALS -->
     <string name="modal_delete_track_title">Delete track</string>
@@ -50,9 +50,9 @@
     <string name="info_timer_usage">Press on the timer to start/stop</string>
 
     <!-- ERROR MESSAGES -->
-    <string name="invalid_first_name">Not a valid firstname</string>
-    <string name="invalid_last_name">Not a valid lastname</string>
-    <string name="invalid_email">Not a valid email</string>
+    <string name="invalid_first_name">Invalid firstname!</string>
+    <string name="invalid_last_name">Invalid lastname!</string>
+    <string name="invalid_email">Invalid email!</string>
     <string name="invalid_birthdate">Invalid birthdate!</string>
     <string name="invalid_location_start">Invalid start location!</string>
     <string name="invalid_location_finish">Invalid finish location!</string>
@@ -67,5 +67,5 @@
     <string name="shr_pref_timer_running" translatable="false">TimerState</string>
 
     <!-- AUTO GENERATED -->
-    <string name="hello_blank_fragment"></string>
+    <string name="hello_blank_fragment" translatable="false"></string>
 </resources>

@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 import si.um.feri.hillclimbracing.R
 import si.um.feri.hillclimbracing.Track
 import si.um.feri.hillclimbracing.enums.DifficultyEnum
