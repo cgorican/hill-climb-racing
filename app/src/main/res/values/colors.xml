@@ -8,7 +8,7 @@
     <color name="black">#FF000000</color>
 
     <color name="diff_easy">#6BCA1C</color>
-    <color name="diff_medium">#D5A704</color>
+    <color name="diff_medium">#FFAF0E</color>
     <color name="diff_hard">#DC242B</color>
 
     <color name="light_gray">#E6E8E8E8</color>

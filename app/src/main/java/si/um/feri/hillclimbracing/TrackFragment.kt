@@ -58,10 +58,6 @@ class TrackFragment : Fragment() {
 
         app = requireContext().applicationContext as HCRApplication
 
-        if (args.index == -1) {
-            Navigation.findNavController(view)
-                .navigate(R.id.action_trackFragment_to_mainFragment)
-        }
         track = app.data.tracks[args.index]
 
         _binding!!.displayDifficulty.text = track.difficulty.value.toString()

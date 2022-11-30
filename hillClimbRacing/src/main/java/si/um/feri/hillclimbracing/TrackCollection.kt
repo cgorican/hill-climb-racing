@@ -18,13 +18,16 @@ class TrackCollection {
                 Point(46.568250, 15.652314)))
             result.addTrack(Track("Trikotna jasa",DifficultyEnum.EASY,
                 Point(46.5317145,15.6029794),
-                Point(46.5252336,15.6014253)))
+                Point(46.5252336,15.6014253),
+            "Pohorje"))
             result.addTrack(Track("Koča Luka",DifficultyEnum.EASY,
                 Point(46.5317145,15.6029794),
-                Point(46.5163247,15.5851272)))
+                Point(46.5163247,15.5851272),
+                "Pohorje"))
             result.addTrack(Track("Bellevue",DifficultyEnum.MEDIUM,
                 Point(46.5317145,15.6029794),
-                Point(46.515749, 15.579491)))
+                Point(46.515749, 15.579491),
+                "Pohorje"))
             result.addTrack(Track("Kalvarija",DifficultyEnum.EASY,
                 Point(46.5693499,15.634215),
                 Point(46.5708842,15.6356722),

@@ -44,7 +44,7 @@
     <fragment
         android:id="@+id/trackInputFragment"
         android:name="si.um.feri.hillclimbracing.TrackInputFragment"
-        android:label="{track_input_title}"
+        android:label="{title}"
         tools:layout="@layout/fragment_track_input" >
         <action
             android:id="@+id/action_trackInputFragment_to_mainFragment"
@@ -54,23 +54,22 @@
             app:argType="integer"
             android:defaultValue="-1" />
         <argument
-            android:name="track_input_title"
+            android:name="title"
             app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/trackFragment"
         android:name="si.um.feri.hillclimbracing.TrackFragment"
-        android:label="{track_title}"
+        android:label="{title}"
         tools:layout="@layout/fragment_track" >
         <action
             android:id="@+id/action_trackFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
         <argument
             android:name="index"
-            app:argType="integer"
-            android:defaultValue="-1" />
+            app:argType="integer" />
         <argument
-            android:name="track_title"
+            android:name="title"
             app:argType="string"
             android:defaultValue="Unknown track" />
     </fragment>

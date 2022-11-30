@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.recyclerview.widget.RecyclerView
 import si.um.feri.hillclimbracing.R
 import si.um.feri.hillclimbracing.Track
@@ -26,6 +28,8 @@ class TrackAdapter(
         val title: TextView = itemView.findViewById(R.id.displayTitle)
         val diff: TextView = itemView.findViewById(R.id.displayDifficultyValue)
         val desc: TextView = itemView.findViewById(R.id.displayDescription)
+
+        val layout: ConstraintLayout = itemView.findViewById(R.id.constraintLayout)
 
         init {
             itemView.setOnClickListener(this)
@@ -69,6 +73,20 @@ class TrackAdapter(
             DifficultyEnum.MEDIUM.value -> holder.diff.background.setTint(context.getColor(R.color.diff_medium))
             else -> holder.diff.background.setTint(context.getColor(R.color.diff_easy))
         }
+
+        if (!itemsViewModel.description.isEmpty()) {
+            val constraintSet = ConstraintSet()
+            constraintSet.clone(holder.layout)
+            constraintSet.clear(R.id.displayTitle, ConstraintSet.BASELINE)
+            constraintSet.connect(
+                R.id.displayTitle,
+                ConstraintSet.TOP,
+                R.id.displayDifficultyValue,
+                ConstraintSet.TOP
+            )
+            constraintSet.applyTo(holder.layout)
+        }
+        else holder.desc.visibility = View.INVISIBLE
     }
 
     override fun getItemCount() = data.size

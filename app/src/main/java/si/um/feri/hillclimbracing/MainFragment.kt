@@ -49,8 +49,8 @@ class MainFragment : Fragment(), TrackAdapter.OnItemClickListener {
 
         _binding!!.floatingActionButton.setOnClickListener {
             Log.i(TAG, "Navigate to add a new track fragment")
-            val track_input_title = getString(R.string.title_add_track)
-            val action = MainFragmentDirections.actionMainFragmentToTrackInputFragment(track_input_title)
+            val title = getString(R.string.title_add_track)
+            val action = MainFragmentDirections.actionMainFragmentToTrackInputFragment(title=title)
             findNavController().navigate(action)
         }
     }
@@ -62,17 +62,15 @@ class MainFragment : Fragment(), TrackAdapter.OnItemClickListener {
 
     override fun onItemClick(p0: View?, position: Int) {
         Log.i(TAG, "Track[${position}] clicked (${app.data.tracks[position].title})")
-        val track_title = app.data.tracks[position].title
-        val index = position
-        val action = MainFragmentDirections.actionMainFragmentToTrackFragment(index, track_title)
+        val title: String = app.data.tracks[position].title
+        val action = MainFragmentDirections.actionMainFragmentToTrackFragment(title=title, index=position)
         findNavController().navigate(action)
     }
 
     override fun onItemLongClick(p0: View?, position: Int) {
         Log.i(TAG, "Track[${position}] long click (${app.data.tracks[position].title})")
-        val track_input_title = getString(R.string.title_edit_track)
-        val index = position
-        val action = MainFragmentDirections.actionMainFragmentToTrackInputFragment(track_input_title, index)
+        val title = getString(R.string.title_edit_track)
+        val action = MainFragmentDirections.actionMainFragmentToTrackInputFragment(title=title, index=position)
         findNavController().navigate(action)
     }
 }
