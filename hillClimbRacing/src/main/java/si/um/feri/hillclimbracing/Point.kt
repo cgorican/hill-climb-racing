@@ -1,3 +1,5 @@
 package si.um.feri.hillclimbracing
 
-class Point(val latitude: Double, val longitude: Double)
+import java.io.Serializable
+
+class Point(val latitude: Double, val longitude: Double) : Serializable

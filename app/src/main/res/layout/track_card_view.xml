@@ -49,14 +49,25 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_std"
+            android:layout_marginBottom="@dimen/margin_half"
             android:text="Track title"
-            tools:layout_editor_absoluteX="90dp"
-            tools:layout_editor_absoluteY="15dp"
-            app:layout_constraintBaseline_toBaselineOf="@+id/displayDifficultyValue"
+            android:textStyle="bold"
+            app:layout_constraintBaseline_toBaselineOf="@id/displayDifficultyValue"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/guideline7"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintTop_toTopOf="@id/displayDifficultyValue" />
+
+        <TextView
+            android:id="@+id/displayDescription"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_std"
+            android:text="Description"
+            android:autoSizeTextType="uniform"
+            app:layout_constraintTop_toBottomOf="@+id/displayTitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guideline7"
+            app:layout_constraintBottom_toBottomOf="@id/displayDifficultyValue" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

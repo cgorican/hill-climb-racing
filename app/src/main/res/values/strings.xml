@@ -5,35 +5,66 @@
     <string name="title_map">Map</string>
     <string name="title_profile_setup">Setup profile</string>
     <string name="title_add_track">Add a track</string>
+    <string name="title_edit_track">Edit track</string>
 
     <!-- h1 -->
     <string name="h1_profile_setup">Profile setup</string>
 
     <!-- BUTTONS -->
     <string name="btn_confirm">Confirm</string>
+    <string name="btn_submit">Submit</string>
+    <string name="btn_add">Add</string>
+    <string name="btn_edit">Edit</string>
+    <string name="btn_start">Start</string>
+    <string name="btn_reset">Reset</string>
+    <string name="btn_stop">Stop</string>
+    <string name="btn_delete">Delete</string>
+    <string name="btn_cancel">Cancel</string>
 
     <!-- LABELS -->
     <string name="label_firstname">Firstname</string>
     <string name="label_lastname">Lastname</string>
     <string name="label_email">Email</string>
     <string name="label_birthdate">Birthdate</string>
+    <string name="label_title">Title</string>
+    <string name="label_desc">Description</string>
+    <string name="label_difficulty">Difficulty</string>
+    <string name="label_start_loc">Start location</string>
+    <string name="label_finish_loc">Finish location</string>
 
     <!-- HINTS -->
-    <string name="hint_firstname">Janez</string>
-    <string name="hint_lastname">Novak</string>
-    <string name="hint_email">janez.novak@gmail.com</string>
-    <string name="hint_birthdate">01/01/2000</string>
+    <string name="hint_firstname">Bob</string>
+    <string name="hint_lastname">Smith</string>
+    <string name="hint_email">bob.smith@domain.com</string>
+    <string name="hint_birthdate">19/04/2001</string>
+    <string name="hint_track_title">Piramida</string>
+    <string name="hint_desc">Description</string>
+    <string name="hint_loc">46.55/15.63</string>
+    <string name="hint_loc2">46.59/15.43</string>
+
+    <!-- MODALS -->
+    <string name="modal_delete_track_title">Delete track</string>
+    <string name="modal_delete_track_desc">Are you sure you would like to delete %s?</string>
+
+    <!-- INFO -->
+    <string name="info_timer_usage">Press on the timer to start/stop</string>
 
     <!-- ERROR MESSAGES -->
     <string name="invalid_first_name">Not a valid firstname</string>
     <string name="invalid_last_name">Not a valid lastname</string>
     <string name="invalid_email">Not a valid email</string>
-    <string name="invalid_birthdate">Not a valid birthdate</string>
+    <string name="invalid_birthdate">Invalid birthdate!</string>
+    <string name="invalid_location_start">Invalid start location!</string>
+    <string name="invalid_location_finish">Invalid finish location!</string>
     <string name="empty_fields">Fill out the fields!</string>
+    <string name="profile_not_set_up">Profile setup required!</string>
 
     <!-- SHARED PREFS -->
-    <string name="path_shared_pref" translatable="false">ShrPref</string>
-    <string name="shrpref_session_id" translatable="false">ShrPref</string>
+    <string name="path_shr_pref" translatable="false">ShrPref</string>
+    <string name="shr_pref_session_id" translatable="false">SessionId</string>
+    <string name="shr_pref_racer_id" translatable="false">RacerId</string>
+    <string name="shr_pref_timer_start" translatable="false">TimerStart</string>
+    <string name="shr_pref_timer_running" translatable="false">TimerState</string>
 
     <!-- AUTO GENERATED -->
     <string name="hello_blank_fragment"></string>

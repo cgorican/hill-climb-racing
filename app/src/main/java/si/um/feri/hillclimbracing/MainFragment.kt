@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.LayoutManager
@@ -15,6 +17,7 @@ import si.um.feri.hillclimbracing.databinding.FragmentMainBinding
 import si.um.feri.hillclimbracing.databinding.FragmentRacerBinding
 
 class MainFragment : Fragment(), TrackAdapter.OnItemClickListener {
+    private val TAG = MainActivity::class.qualifiedName
     private var _binding: FragmentMainBinding? = null
 
     private lateinit var app: HCRApplication
@@ -41,11 +44,14 @@ class MainFragment : Fragment(), TrackAdapter.OnItemClickListener {
         recyclerView.layoutManager = layoutManager
         recyclerView.setHasFixedSize(true)
 
-        adapter = TrackAdapter(app.data.tracks, this)
+        adapter = TrackAdapter(app.data.tracks, requireContext(), this)
         recyclerView.adapter = adapter
 
         _binding!!.floatingActionButton.setOnClickListener {
-            Log.i("BTN", adapter.itemCount.toString())
+            Log.i(TAG, "Navigate to add a new track fragment")
+            val track_input_title = getString(R.string.title_add_track)
+            val action = MainFragmentDirections.actionMainFragmentToTrackInputFragment(track_input_title)
+            findNavController().navigate(action)
         }
     }
 
@@ -55,10 +61,18 @@ class MainFragment : Fragment(), TrackAdapter.OnItemClickListener {
     }
 
     override fun onItemClick(p0: View?, position: Int) {
-        TODO("Not yet implemented")
+        Log.i(TAG, "Track[${position}] clicked (${app.data.tracks[position].title})")
+        val track_title = app.data.tracks[position].title
+        val index = position
+        val action = MainFragmentDirections.actionMainFragmentToTrackFragment(index, track_title)
+        findNavController().navigate(action)
     }
 
     override fun onItemLongClick(p0: View?, position: Int) {
-        TODO("Not yet implemented")
+        Log.i(TAG, "Track[${position}] long click (${app.data.tracks[position].title})")
+        val track_input_title = getString(R.string.title_edit_track)
+        val index = position
+        val action = MainFragmentDirections.actionMainFragmentToTrackInputFragment(track_input_title, index)
+        findNavController().navigate(action)
     }
 }

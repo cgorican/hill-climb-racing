@@ -20,7 +20,7 @@ class HCRApplication : Application(), DefaultLifecycleObserver {
 
     lateinit var data: TrackCollection
     lateinit var sharedPref: SharedPreferences
-    lateinit var editor: SharedPreferences.Editor
+    private lateinit var editor: SharedPreferences.Editor
 
     val id: UUID = UUID.randomUUID()
 
@@ -28,7 +28,7 @@ class HCRApplication : Application(), DefaultLifecycleObserver {
         super<Application>.onCreate()
         ProcessLifecycleOwner.get().lifecycle.addObserver(this)
 
-        sharedPref = getSharedPreferences(getString(R.string.path_shared_pref), Context.MODE_PRIVATE)
+        sharedPref = getSharedPreferences(getString(R.string.path_shr_pref), Context.MODE_PRIVATE)
         editor = sharedPref.edit()
         setSessionId()
 
@@ -36,7 +36,7 @@ class HCRApplication : Application(), DefaultLifecycleObserver {
     }
 
     private fun setSessionId() {
-        editor.putString(getString(R.string.shrpref_session_id),id.toString())
+        editor.putString(getString(R.string.shr_pref_session_id),id.toString())
         editor.apply()
     }
 

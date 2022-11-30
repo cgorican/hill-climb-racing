@@ -4,7 +4,7 @@ import si.um.feri.hillclimbracing.enums.DifficultyEnum
 import java.util.*
 
 class TrackCollection {
-    lateinit var racer: Racer
+    var racer: Racer? = null
     val tracks = mutableListOf<Track>()
 
     companion object {
@@ -25,12 +25,25 @@ class TrackCollection {
             result.addTrack(Track("Bellevue",DifficultyEnum.MEDIUM,
                 Point(46.5317145,15.6029794),
                 Point(46.515749, 15.579491)))
-            result.addTrack(Track("Kalvarija (Štenge)",DifficultyEnum.EASY,
+            result.addTrack(Track("Kalvarija",DifficultyEnum.EASY,
                 Point(46.5693499,15.634215),
-                Point(46.5708842,15.6356722)))
+                Point(46.5708842,15.6356722),
+                "Štenge"))
             result.addTrack(Track("Kalvarija",DifficultyEnum.EASY,
                 Point(46.5693499,15.634215),
                 Point(46.5690347,15.6397799)))
+            result.addTrack(Track("Boč",DifficultyEnum.EASY,
+                Point(46.297389, 15.582705),
+                Point(46.289381, 15.599440),
+                "Zgornje Poljčane, senčna pot"))
+            result.addTrack(Track("Boč",DifficultyEnum.HARD,
+                Point(46.297389, 15.582705),
+                Point(46.289381, 15.599440),
+                "Zgornje Poljčane, plezalna pot"))
+            result.addTrack(Track("Boč",DifficultyEnum.EASY,
+                Point(46.283045, 15.593963),
+                Point(46.289381, 15.599440),
+            "Planinski dom"))
 
             result.order()
 
@@ -39,7 +52,7 @@ class TrackCollection {
     }
 
     fun order() {
-        tracks.sortedWith(compareBy({it.title},{it.difficulty.value}))
+        tracks.sortWith(compareBy<Track> {it.title}.thenBy { it.difficulty.value })
     }
 
     fun addTrack(track: Track) {
@@ -47,7 +60,20 @@ class TrackCollection {
         order()
     }
 
+    fun updateTrack(track: Track) {
+        val index = tracks.indexOfFirst { it.id == track.id }
+        if(index != -1) {
+            tracks[index] = track
+            order()
+        }
+        else addTrack(track)
+    }
+
     fun removeTrack(id: UUID) {
         tracks.removeAt(tracks.indexOfFirst { it.id == id })
+    }
+
+    fun setTrackScore(trackId: UUID, score: Score) {
+        tracks[tracks.indexOfFirst { it.id == trackId }].addScore(score)
     }
 }
