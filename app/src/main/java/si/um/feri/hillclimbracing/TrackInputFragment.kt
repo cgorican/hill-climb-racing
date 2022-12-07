@@ -18,8 +18,8 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 
 class TrackInputFragment : Fragment() {
-    private lateinit var app: HCRApplication
     private val TAG = TrackInputFragment::class.qualifiedName
+    private lateinit var app: HCRApplication
     private val args: TrackInputFragmentArgs by navArgs()
     private var _binding: FragmentTrackInputBinding? = null
 

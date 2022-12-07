@@ -18,6 +18,7 @@ import java.time.LocalDateTime
 
 
 class TrackFragment : Fragment() {
+    private val TAG = TrackFragment::class.qualifiedName
     private lateinit var app: HCRApplication
     private lateinit var start: LocalDateTime
     private lateinit var track: Track

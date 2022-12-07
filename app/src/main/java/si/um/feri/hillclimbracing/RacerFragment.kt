@@ -14,9 +14,9 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 class RacerFragment : Fragment() {
+    private val TAG = RacerFragment::class.qualifiedName
     private var _binding: FragmentRacerBinding? = null
     lateinit var app: HCRApplication
-    private val TAG = RacerFragment::class.qualifiedName
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

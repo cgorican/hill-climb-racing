@@ -17,7 +17,7 @@ import si.um.feri.hillclimbracing.databinding.FragmentMainBinding
 import si.um.feri.hillclimbracing.databinding.FragmentRacerBinding
 
 class MainFragment : Fragment(), TrackAdapter.OnItemClickListener {
-    private val TAG = MainActivity::class.qualifiedName
+    private val TAG = MainFragment::class.qualifiedName
     private var _binding: FragmentMainBinding? = null
 
     private lateinit var app: HCRApplication

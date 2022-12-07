@@ -3,8 +3,9 @@ package si.um.feri.hillclimbracing
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+import android.location.LocationListener
+import android.location.LocationManager
 import android.util.Log
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ProcessLifecycleOwner
@@ -22,6 +23,7 @@ class HCRApplication : Application(), DefaultLifecycleObserver {
     lateinit var data: TrackCollection
     lateinit var sharedPref: SharedPreferences
     private lateinit var editor: SharedPreferences.Editor
+    var location: Point? = null
 
     val id: UUID = UUID.randomUUID()
 
