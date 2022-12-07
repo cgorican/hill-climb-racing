@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
@@ -41,23 +42,33 @@ class MapsFragment : Fragment(), LocationListener {
         for (track in app.data.tracks) {
             val tmpStartLoc = LatLng(track.start.latitude, track.start.longitude)
             val tmpFinishLoc = LatLng(track.finish.latitude, track.finish.longitude)
-            googleMap.addMarker(
-                MarkerOptions().position(tmpStartLoc).title("${track.title} [START]")
+            googleMap.addMarker(MarkerOptions()
+                    .position(tmpStartLoc)
+                    .title("${track.title} [START]")
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
             )
             googleMap.addMarker(
-                MarkerOptions().position(tmpFinishLoc).title("${track.title} [FINISH]")
+                MarkerOptions()
+                    .position(tmpFinishLoc)
+                    .title("${track.title} [FINISH]")
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
             )
         }
         //googleMap.addMarker(MarkerOptions().position(f103).title("FERI F103"))
         //googleMap.moveCamera(CameraUpdateFactory.newLatLng(f103))
         //googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(f103, 14f))
-        if(activity is MainActivity) {
+        if (activity is MainActivity) {
             googleMap.isMyLocationEnabled = (activity as MainActivity).checkLocationPermission()
+
         }
-        if(app.location != null) {
-            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(pointToLatLng(app.location!!), 14f))
-        }
-        else {
+        if (app.location != null) {
+            googleMap.moveCamera(
+                CameraUpdateFactory.newLatLngZoom(
+                    pointToLatLng(app.location!!),
+                    14f
+                )
+            )
+        } else {
             googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(f103, 14f))
         }
         try {
@@ -78,11 +89,16 @@ class MapsFragment : Fragment(), LocationListener {
     @SuppressLint("MissingPermission")
     private val updateCallback = OnMapReadyCallback { googleMap ->
         Log.i("LOC_UPDATE?", "now?")
-        if(activity is MainActivity) {
+        if (activity is MainActivity) {
             googleMap.isMyLocationEnabled = (activity as MainActivity).checkLocationPermission()
         }
-        if(app.location != null) {
-            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(pointToLatLng(app.location!!), 14f))
+        if (app.location != null) {
+            googleMap.animateCamera(
+                CameraUpdateFactory.newLatLngZoom(
+                    pointToLatLng(app.location!!),
+                    15f
+                )
+            )
         }
     }
 
@@ -101,6 +117,9 @@ class MapsFragment : Fragment(), LocationListener {
         app = requireContext().applicationContext as HCRApplication
         val mapFragment =
             childFragmentManager.findFragmentById(R.id.mapsFragment) as SupportMapFragment?
+        if (activity is MainActivity) {
+            (activity as MainActivity).subscribeOnLocationUpdates(this)
+        }
         mapFragment?.getMapAsync(callback)
     }
 
@@ -118,7 +137,6 @@ class MapsFragment : Fragment(), LocationListener {
     }
 
     override fun onLocationChanged(location: Location) {
-        Log.d("LOC_UPDATE", location.toString())
         updateMap()
     }
 }

@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
     private lateinit var app: HCRApplication
     private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
-    private lateinit var locationManager: LocationManager
+    lateinit var locationManager: LocationManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -85,6 +85,8 @@ class MainActivity : AppCompatActivity(), LocationListener {
         }
     }
 
+
+
     override fun onLocationChanged(location: Location) {
         app.location = Point(location.latitude, location.longitude)
         Log.i("LOC", location.toString())
@@ -103,6 +105,18 @@ class MainActivity : AppCompatActivity(), LocationListener {
                 10,
                 3f,
                 this
+            )
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    fun subscribeOnLocationUpdates(listener: LocationListener) {
+        if(checkLocationPermission()) {
+            locationManager.requestLocationUpdates(
+                LocationManager.GPS_PROVIDER,
+                10,
+                3f,
+                listener
             )
         }
     }
