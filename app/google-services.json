@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "278564917692",
+    "project_id": "hillclimbracing-38b2e",
+    "storage_bucket": "hillclimbracing-38b2e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:278564917692:android:951056ea8eec24e19e9bb9",
+        "android_client_info": {
+          "package_name": "si.um.feri.hillclimbracing"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "278564917692-c9spsifcg8m267atvofqseioigc854hv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBUpqyDukJXqmX0__nvkyuZD9ffpZyEr1A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "278564917692-c9spsifcg8m267atvofqseioigc854hv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
