@@ -9,6 +9,9 @@ import android.location.LocationManager
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -18,6 +21,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.snackbar.Snackbar
 import si.um.feri.hillclimbracing.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity(), LocationListener {
@@ -27,6 +31,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
     private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
     lateinit var locationManager: LocationManager
+    lateinit var requestLauncher: ActivityResultLauncher<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,24 +73,22 @@ class MainActivity : AppCompatActivity(), LocationListener {
 
     @SuppressLint("MissingPermission")
     private fun initLocationService() {
-        locationManager = getSystemService(LOCATION_SERVICE) as LocationManager
-
-        if (checkLocationPermission()) {
-            // ask permissions here using below code
-            ActivityCompat.requestPermissions(
-                this@MainActivity, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1
-            )
-        } else {
-            locationManager.requestLocationUpdates(
-                LocationManager.GPS_PROVIDER,
-                10,
-                3f,
-                this
-            )
+        requestLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+            if(isGranted) {
+                locationManager = getSystemService(LOCATION_SERVICE) as LocationManager
+                locationManager.requestLocationUpdates(
+                    LocationManager.GPS_PROVIDER,
+                    10,
+                    3f,
+                    this
+                )
+            }
+            else {
+                Toast.makeText(this,"Location is disabled!",Toast.LENGTH_SHORT).show()
+            }
         }
+        requestLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
     }
-
-
 
     override fun onLocationChanged(location: Location) {
         app.location = Point(location.latitude, location.longitude)

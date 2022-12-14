@@ -1,5 +1,6 @@
 package si.um.feri.hillclimbracing
 
+import android.location.Location
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.LayoutInflater
@@ -79,6 +80,7 @@ class TrackFragment : Fragment() {
             .centerCrop()   //.centerInside()
             .noFade() // disable fade animation
             .into(_binding!!.banner)
+
         /*
         running = app.sharedPref.getBoolean(getString(R.string.shr_pref_timer_running), false)
         if(running) {
@@ -149,6 +151,19 @@ class TrackFragment : Fragment() {
                 .apply()
         }
          */
+    }
+
+    private fun isOnLocation(pt: Point): Boolean {
+        if(app.location == null) return false
+        val distance = FloatArray(1)
+        Location.distanceBetween(
+            app.location!!.longitude,
+            app.location!!.longitude,
+            pt.longitude,
+            pt.latitude,
+            distance
+        )
+        return distance[0] <= 5
     }
 
     private fun startTimer() {
