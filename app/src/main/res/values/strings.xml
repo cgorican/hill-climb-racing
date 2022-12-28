@@ -65,6 +65,11 @@
     <string name="shr_pref_racer_id" translatable="false">RacerId</string>
     <string name="shr_pref_timer_start" translatable="false">TimerStart</string>
     <string name="shr_pref_timer_running" translatable="false">TimerState</string>
+    <string name="shr_pref_timer_track_id" translatable="false">TimerTrackId</string>
+
+    <string name="TIMER_SERVICE_VAR" translatable="false">TIME_REMAINING</string>
+    <string name="TIMER_UPDATE_ACTION" translatable="false">TIMER_UPDATE_ACTION</string>
+    <string name="TIMER_VALUE" translatable="false">TIMER_VALUE</string>
 
     <string name="json_data_path" translatable="false">hcr_data.json</string>
 
