@@ -113,7 +113,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
 
     override fun onLocationChanged(location: Location) {
         app.location = Point(location.latitude, location.longitude)
-        Log.i("LOC", location.toString())
+        Log.i("$TAG Location", "(${location.latitude}, ${location.longitude})")
     }
 
     @SuppressLint("MissingPermission")

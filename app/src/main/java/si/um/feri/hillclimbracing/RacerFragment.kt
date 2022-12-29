@@ -94,11 +94,21 @@ class RacerFragment : Fragment() {
         }
 
         if (app.data.racer == null) {
-            val racer = Racer(firstname, lastname, email, birthdateString)
+            val index = app.racers.indexOfFirst { it.email == email }
+            val racer = if(index == -1) {
+                Racer(firstname, lastname, email, birthdateString)
+            } else {
+                app.racers[index]
+            }
+            if(index != -1) {
+                racer.firstname = firstname
+                racer.lastname = lastname
+                racer.birthdate = birthdateString
+            }
             app.data.racer = racer
             app.sharedPref
                 .edit()
-                .putString(getString(R.string.shr_pref_racer_id), racer.id.toString())
+                .putString(getString(R.string.SHR_PREF_RACER_ID), racer.id.toString())
                 .apply()
             app.updateRacer()
         }

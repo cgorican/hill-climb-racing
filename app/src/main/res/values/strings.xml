@@ -58,17 +58,18 @@
     <string name="invalid_location_finish">Invalid finish location!</string>
     <string name="empty_fields">Fill out the fields!</string>
     <string name="profile_not_set_up">Profile setup required!</string>
+
     <string name="location_disabled">Location service is disabled!</string>
-    <string name="meters_away">You are %d meters away!</string>
-    <string name="meters_to_finish">%d meters to finish!</string>
+    <string name="loc_distance_meters_away">You are %d meters away!</string>
+    <string name="loc_distance_meters_to_finish">%d meters to finish!</string>
 
     <!-- SHARED PREFS -->
-    <string name="path_shr_pref" translatable="false">ShrPref</string>
-    <string name="shr_pref_session_id" translatable="false">SessionId</string>
-    <string name="shr_pref_racer_id" translatable="false">RacerId</string>
-    <string name="shr_pref_timer_start" translatable="false">TimerStart</string>
-    <string name="shr_pref_timer_running" translatable="false">TimerState</string>
-    <string name="shr_pref_timer_track_id" translatable="false">TimerTrackId</string>
+    <string name="SHR_PREF_PATH" translatable="false">ShrPref</string>
+    <string name="SHR_PREF_SESSION_ID" translatable="false">SessionId</string>
+    <string name="SHR_PREF_RACER_ID" translatable="false">RacerId</string>
+    <string name="SHR_PREF_TIMER_START" translatable="false">TimerStart</string>
+    <string name="SHR_PREF_TIMER_RUNNING" translatable="false">TimerState</string>
+    <string name="SHR_PREF_TIMER_TRACK_ID" translatable="false">TimerTrackId</string>
 
     <!-- TIMER SERVICE -->
     <string name="TIMER_SERVICE_VAR" translatable="false">TIME_REMAINING</string>
@@ -79,7 +80,13 @@
     <string name="NOTIFICATIONS_CHANNEL_ID" translatable="false">HILL_CLIMB_RACING_NOTIFIER</string>
     <string name="NOTIFICATION_NEW_TRACK" translatable="false">New track!</string>
 
-    <string name="json_data_path" translatable="false">hcr_data.json</string>
+    <!-- LOCAL JSON DATA FILE -->
+    <string name="JSON_DATA_PATH" translatable="false">hcr_data.json</string>
+
+    <!-- FIREBASE -->
+    <string name="FIREBASE_TRACKS" translatable="false">tracks</string>
+    <string name="FIREBASE_RACERS" translatable="false">racers</string>
+    <string name="FIREBASE_SCORES" translatable="false">scores</string>
 
     <!-- AUTO GENERATED -->
     <string name="hello_blank_fragment" translatable="false" />

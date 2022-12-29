@@ -20,13 +20,13 @@ class Track(
     private fun order() {
         leaderboard.sortWith(compareBy<Score> {
             Duration.between(
-                it.startTime,
-                it.finishTime
+                Score.toLocalDateTime(it.startTime),
+                Score.toLocalDateTime(it.finishTime)
             )
-        }.thenByDescending { it.finishTime })
+        }.thenByDescending { Score.toLocalDateTime(it.finishTime) })
     }
 
-    fun addScore(score: Score) {
+    fun updateScore(score: Score) {
         val index = leaderboard.indexOfFirst { it.racerId == score.racerId }
         if(index == -1) {
             leaderboard.add(score)

@@ -55,7 +55,7 @@ class HCRApplication : Application(), DefaultLifecycleObserver {
         super<Application>.onCreate()
         ProcessLifecycleOwner.get().lifecycle.addObserver(this)
 
-        sharedPref = getSharedPreferences(getString(R.string.path_shr_pref), Context.MODE_PRIVATE)
+        sharedPref = getSharedPreferences(getString(R.string.SHR_PREF_PATH), Context.MODE_PRIVATE)
         editor = sharedPref.edit()
         setSessionId()
 
@@ -205,7 +205,7 @@ class HCRApplication : Application(), DefaultLifecycleObserver {
     }
 
     private fun setSessionId() {
-        editor.putString(getString(R.string.shr_pref_session_id),id.toString())
+        editor.putString(getString(R.string.SHR_PREF_SESSION_ID),id.toString())
         editor.apply()
     }
 
@@ -219,11 +219,13 @@ class HCRApplication : Application(), DefaultLifecycleObserver {
     fun putTrack(track: Track) {
         val trackRef = refTracks.child(track.id.toString())
         trackRef.setValue(track)
-        // data.updateTrack(track) -maybe we dont need it
     }
 
     fun addTrackScore(trackId: String, score: Score) {
-        // data.addTrackScore(trackId,score) -maybe we dont need it
+        val index = data.tracks.indexOfFirst { it.id == trackId }
+        if(index == -1) return
+        data.addTrackScore(trackId,score)
+        putTrack(data.tracks[index])
     }
 
     fun deleteTrack(trackId: String) {
@@ -243,7 +245,7 @@ class HCRApplication : Application(), DefaultLifecycleObserver {
         Log.i(TAG,"RecoveringUserProfile")
         if(data.racer == null) {
             val racerIdShrPref = sharedPref
-                .getString(getString(R.string.shr_pref_racer_id), null)
+                .getString(getString(R.string.SHR_PREF_RACER_ID), null)
             Log.i(TAG,"SHARED_PREF_RACER_ID: $racerIdShrPref")
             Log.i(TAG, "${racers.size} racers present")
             if(racerIdShrPref != null && racers.isNotEmpty()) {

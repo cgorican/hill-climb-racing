@@ -1,7 +1,6 @@
 package si.um.feri.hillclimbracing
 
 import si.um.feri.hillclimbracing.enums.DifficultyEnum
-import java.util.*
 
 class TrackCollection {
     var racer: Racer? = null
@@ -73,10 +72,14 @@ class TrackCollection {
     }
 
     fun deleteTrack(id: String) {
-        tracks.removeAt(tracks.indexOfFirst { it.id == id })
+        val index = tracks.indexOfFirst { it.id == id }
+        if(index == -1) return
+        tracks.removeAt(index)
     }
 
     fun addTrackScore(trackId: String, score: Score) {
-        tracks[tracks.indexOfFirst { it.id == trackId }].addScore(score)
+        val index = tracks.indexOfFirst { it.id == trackId }
+        if(index == -1) return
+        tracks[index].updateScore(score)
     }
 }

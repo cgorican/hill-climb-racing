@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.location.Location
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +19,6 @@ import com.squareup.picasso.Picasso
 import si.um.feri.hillclimbracing.databinding.FragmentTrackBinding
 import si.um.feri.hillclimbracing.enums.DifficultyEnum
 import si.um.feri.hillclimbracing.services.TimerService
-import java.lang.Math.round
 import java.time.Duration
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -81,6 +81,11 @@ class TrackFragment : Fragment() {
         }
 
         track = app.data.tracks[args.index]
+
+        // temp
+        track.leaderboard.forEach({
+            Log.i(TAG, it.racerId+"")
+        })
 
         // difficulty bubble
         _binding!!.displayDifficulty.text = track.difficulty.value.toString()
@@ -151,10 +156,10 @@ class TrackFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        val isRunning = app.sharedPref.getBoolean(getString(R.string.shr_pref_timer_running), false)
+        val isRunning = app.sharedPref.getBoolean(getString(R.string.SHR_PREF_TIMER_RUNNING), false)
         if (!isRunning) return
         if (track.id.toString() != app.sharedPref.getString(
-                getString(R.string.shr_pref_timer_track_id),
+                getString(R.string.SHR_PREF_TIMER_TRACK_ID),
                 null
             )
         ) {
@@ -162,9 +167,9 @@ class TrackFragment : Fragment() {
             running = false
             timerTextView.text = Score.durationToString(Duration.ZERO)
             app.sharedPref.edit()
-                .putBoolean(getString(R.string.shr_pref_timer_running), false)
-                .remove(getString(R.string.shr_pref_timer_track_id))
-                .remove(getString(R.string.shr_pref_timer_start))
+                .putBoolean(getString(R.string.SHR_PREF_TIMER_RUNNING), false)
+                .remove(getString(R.string.SHR_PREF_TIMER_TRACK_ID))
+                .remove(getString(R.string.SHR_PREF_TIMER_START))
                 .apply()
             return
         }
@@ -175,7 +180,7 @@ class TrackFragment : Fragment() {
             IntentFilter(getString(R.string.TIMER_UPDATE_ACTION))
         )
         val startTime: String? =
-            app.sharedPref.getString(getString(R.string.shr_pref_timer_start), null)
+            app.sharedPref.getString(getString(R.string.SHR_PREF_TIMER_START), null)
         if (startTime != null) {
             start = LocalDateTime.parse(startTime, formatter)
         }
@@ -186,9 +191,9 @@ class TrackFragment : Fragment() {
         if (running) {
             context?.unregisterReceiver(timerUpdateReceiver)
             app.sharedPref.edit()
-                .putString(getString(R.string.shr_pref_timer_start), start.format(formatter))
-                .putBoolean(getString(R.string.shr_pref_timer_running), running)
-                .putString(getString(R.string.shr_pref_timer_track_id), track.id.toString())
+                .putString(getString(R.string.SHR_PREF_TIMER_START), start.format(formatter))
+                .putBoolean(getString(R.string.SHR_PREF_TIMER_RUNNING), running)
+                .putString(getString(R.string.SHR_PREF_TIMER_TRACK_ID), track.id.toString())
                 .apply()
         }
     }
@@ -210,8 +215,8 @@ class TrackFragment : Fragment() {
 
         var distanceInMeters = phoneLoc.distanceTo(trackLoc)
 
-        if (distanceInMeters >= 5) {
-            distanceInMeters -= 5
+        if (distanceInMeters <= 5) {
+            distanceInMeters = 0f
         }
 
         return distanceInMeters
@@ -241,7 +246,7 @@ class TrackFragment : Fragment() {
             if (distanceToStartPoint > 0) {
                 Toast.makeText(
                     requireContext(), String.format(
-                        getString(R.string.meters_away),
+                        getString(R.string.loc_distance_meters_away),
                         distanceToStartPoint.roundToInt()
                     ), Toast.LENGTH_SHORT
                 ).show()
@@ -266,7 +271,7 @@ class TrackFragment : Fragment() {
             if (distanceToFinishPoint > 0) {
                 Toast.makeText(
                     requireContext(), String.format(
-                        getString(R.string.meters_to_finish),
+                        getString(R.string.loc_distance_meters_to_finish),
                         distanceToFinishPoint.roundToInt()
                     ), Toast.LENGTH_SHORT
                 ).show()
@@ -285,7 +290,7 @@ class TrackFragment : Fragment() {
 
     private fun submitScore(): Boolean {
         if (app.data.racer == null) return false
-        val score = Score(app.data.racer!!.id, start, end)
+        val score = Score(app.data.racer!!.id, Score.toFormattedString(start), Score.toFormattedString(end))
         app.addTrackScore(track.id, score)
         return true
     }

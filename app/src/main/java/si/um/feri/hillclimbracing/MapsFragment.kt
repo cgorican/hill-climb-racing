@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.clearFragmentResultListener
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
@@ -131,6 +132,7 @@ class MapsFragment : Fragment(), LocationListener {
     private fun pointToLatLng(point: Point): LatLng = LatLng(point.latitude, point.longitude)
 
     private fun updateMap() {
+        if(!isAdded) return
         val mapFragment =
             childFragmentManager.findFragmentById(R.id.mapsFragment) as SupportMapFragment?
         mapFragment?.getMapAsync(updateCallback)
