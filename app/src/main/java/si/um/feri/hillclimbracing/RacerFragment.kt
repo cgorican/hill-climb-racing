@@ -32,17 +32,34 @@ class RacerFragment : Fragment() {
 
         app = requireContext().applicationContext as HCRApplication
 
+        // check db for shared pref id
+        if(app.data.racer == null) {
+            val racerIdShrPref = app.sharedPref
+                .getString(getString(R.string.shr_pref_racer_id), null)
+            if(racerIdShrPref != null && app.racers.isNotEmpty()) {
+                Log.i(TAG,"SHARED_PREF_RACER_ID: $racerIdShrPref")
+                val index = app.racers.indexOfFirst { it.id == racerIdShrPref }
+                if(index > -1) {
+                    app.data.racer = app.racers[index]
+                }
+            }
+        }
+
+        // fill the input fields
         if (app.data.racer != null) {
             _binding?.inputFirstname!!.setText(app.data.racer!!.firstname)
             _binding?.inputLastname!!.setText(app.data.racer!!.lastname)
             _binding?.inputEmail!!.setText(app.data.racer!!.email)
             val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
             _binding?.inputBirthdate!!.setText(app.data.racer!!.birthdate.format(formatter))
-            _binding?.inputFirstname!!.isEnabled = false
-            _binding?.inputLastname!!.isEnabled = false
-            _binding?.inputBirthdate!!.isEnabled = false
+            // lock input fields
+            _binding?.inputFirstname!!.isEnabled = true
+            _binding?.inputLastname!!.isEnabled = true
+            _binding?.inputEmail!!.isEnabled = false
+            _binding?.inputBirthdate!!.isEnabled = true
         }
 
+        // submit button
         _binding?.btnSetRacer!!.setOnClickListener {
             if (submitProfile()) {
                 Log.i(TAG, "Profile updated")
@@ -86,15 +103,19 @@ class RacerFragment : Fragment() {
         }
 
         if (app.data.racer == null) {
-            val racer = Racer(firstname, lastname, email, birthdate)
+            val racer = Racer(firstname, lastname, email, birthdateString)
             app.data.racer = racer
             app.sharedPref
                 .edit()
                 .putString(getString(R.string.shr_pref_racer_id), racer.id.toString())
                 .apply()
             app.updateRacer()
-        } else {
-            app.data.racer!!.email = email
+        }
+        else {
+            app.data.racer!!.firstname = firstname
+            app.data.racer!!.lastname = lastname
+            // app.data.racer!!.email = email // turned off
+            app.data.racer!!.birthdate = birthdateString
             app.updateRacer()
         }
         return true

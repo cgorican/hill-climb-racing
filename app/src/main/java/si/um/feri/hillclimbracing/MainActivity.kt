@@ -148,11 +148,13 @@ class MainActivity : AppCompatActivity(), LocationListener {
     fun displayNotification(track: Track) {
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         if(!app.notificationsEnabled) return
+
         val notification = NotificationCompat.Builder(applicationContext, getString(R.string.NOTIFICATIONS_CHANNEL_ID))
             .setContentTitle(getString(R.string.NOTIFICATION_NEW_TRACK))
             .setContentText("${track.title} ${track.description}")
             .setSmallIcon(R.drawable.ic_launcher_foreground)
             .build()
+
         notificationManager.notify(1,notification)
     }
 

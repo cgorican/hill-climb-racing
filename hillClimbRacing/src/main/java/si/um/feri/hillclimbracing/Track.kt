@@ -17,8 +17,6 @@ class Track(
 
     constructor() : this("",DifficultyEnum.EASY,Point(0.0,0.0),Point(0.0,0.0),"")
 
-
-
     private fun order() {
         leaderboard.sortWith(compareBy<Score> {
             Duration.between(

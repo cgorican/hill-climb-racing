@@ -6,10 +6,12 @@ import java.time.LocalDateTime
 import java.util.*
 
 class Racer(
-    val firstname: String,
-    val lastname: String,
+    var firstname: String,
+    var lastname: String,
     var email: String,
-    val birthdate: LocalDate
+    var birthdate: String
 ) : Serializable {
     val id: String = UUID.randomUUID().toString()
+
+    constructor() : this("","","", "")
 }

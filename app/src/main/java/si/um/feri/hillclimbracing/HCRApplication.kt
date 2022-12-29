@@ -6,7 +6,6 @@ import android.app.NotificationManager
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.ProcessLifecycleOwner
 import com.google.firebase.database.*
@@ -15,7 +14,6 @@ import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.google.gson.reflect.TypeToken
 import java.io.File
 import java.io.FileReader
 import java.util.*
@@ -30,7 +28,7 @@ class HCRApplication : Application(), DefaultLifecycleObserver {
     var notificationsEnabled = false
     var location: Point? = null
     lateinit var data: TrackCollection
-    private val racers: MutableList<Racer> = mutableListOf()
+    val racers: MutableList<Racer> = mutableListOf()
 
     lateinit var sharedPref: SharedPreferences
     private lateinit var editor: SharedPreferences.Editor
@@ -111,7 +109,7 @@ class HCRApplication : Application(), DefaultLifecycleObserver {
                 for (sps in snapshot.children) {
                     val track = sps.getValue<Track>()
                     if (track != null) {
-                        data.tracks.add(track)
+                        data.addTrack(track)
                     }
                 }
             }
@@ -153,26 +151,13 @@ class HCRApplication : Application(), DefaultLifecycleObserver {
         // users
         refRacers.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                val dbRacers: String? = snapshot.getValue(String::class.java)
-                Log.i(TAG, "Racers: "+dbRacers.toString())
-                /*
-                if(dbRacers != null) {
-                    val gson = Gson()
-
-                    var racersList: MutableList<Racer>? = null
-                    try {
-                        val listType = object : TypeToken<MutableList<Racer>>() {}.type
-                        racersList = gson.fromJson(dbRacers, listType)
-                    }
-                    catch(e: Exception) {
-                        Log.e(TAG, "Deserialization failed - MutableList<Racer>")
-                    }
-                    if(racersList != null) {
-                        racers.clear()
-                        racers.addAll(racersList)
+                racers.clear()
+                for (sps in snapshot.children) {
+                    val racer = sps.getValue<Racer>()
+                    if (racer != null) {
+                        racers.add(racer)
                     }
                 }
-                 */
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -229,7 +214,6 @@ class HCRApplication : Application(), DefaultLifecycleObserver {
     // Firebase operations
     // Tracks
     fun addTrack(track: Track) {
-        // data.addTrack(track) -maybe we dont need it
         val trackRef = refTracks.child(track.id.toString())
         trackRef.setValue(track)
     }
@@ -245,16 +229,14 @@ class HCRApplication : Application(), DefaultLifecycleObserver {
     }
 
     fun deleteTrack(trackId: String) {
-        // data.deleteTrack(trackId) -maybe we dont need it
+        refTracks.child(trackId).removeValue()
     }
 
     // Racers
     fun updateRacer(): Boolean {
         if(data.racer == null) return false
-        when(val index = racers.indexOfFirst { it.id == data.racer!!.id }) {
-            -1 -> racers.add(data.racer!!)
-            else -> racers[index] = data.racer!!
-        }
+        refRacers.child(data.racer!!.id)
+            .setValue(data.racer!!)
         return true
     }
 }

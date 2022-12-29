@@ -44,6 +44,9 @@ class TrackInputFragment : Fragment() {
             _binding!!.btnSetTrack.text = getString(R.string.btn_edit)
             _binding!!.inputTrackTitle.setText(track.title)
             _binding!!.inputTrackDesc.setText(track.description)
+
+            _binding!!.spinnerDifficulty.setSelection(track.difficulty.value-1)
+
             _binding!!.inputStartLoc.setText(
                 String.format(
                     "%f/%f",
