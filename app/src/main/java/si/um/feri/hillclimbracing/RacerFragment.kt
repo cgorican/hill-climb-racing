@@ -32,17 +32,8 @@ class RacerFragment : Fragment() {
 
         app = requireContext().applicationContext as HCRApplication
 
-        // check db for shared pref id
         if(app.data.racer == null) {
-            val racerIdShrPref = app.sharedPref
-                .getString(getString(R.string.shr_pref_racer_id), null)
-            if(racerIdShrPref != null && app.racers.isNotEmpty()) {
-                Log.i(TAG,"SHARED_PREF_RACER_ID: $racerIdShrPref")
-                val index = app.racers.indexOfFirst { it.id == racerIdShrPref }
-                if(index > -1) {
-                    app.data.racer = app.racers[index]
-                }
-            }
+            app.recoverUserBySharedPrefs()
         }
 
         // fill the input fields

@@ -6,7 +6,6 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.location.Location
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,9 +18,11 @@ import com.squareup.picasso.Picasso
 import si.um.feri.hillclimbracing.databinding.FragmentTrackBinding
 import si.um.feri.hillclimbracing.enums.DifficultyEnum
 import si.um.feri.hillclimbracing.services.TimerService
+import java.lang.Math.round
 import java.time.Duration
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import kotlin.math.roundToInt
 
 
 class TrackFragment : Fragment() {
@@ -54,15 +55,14 @@ class TrackFragment : Fragment() {
         timerServiceIntent.putExtra(getString(R.string.TIMER_SERVICE_VAR), msUntilAutoStop)
 
         timerTextView = _binding!!.timer
-        timerUpdateReceiver = object: BroadcastReceiver() {
+        timerUpdateReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
                 // Get the time remaining from the intent
                 var timerValue = intent?.getLongExtra(getString(R.string.TIMER_VALUE), 0) ?: 0
-                if(timerValue < 0) {
+                if (timerValue < 0) {
                     timerValue = 0
                     timerTextView.text = Score.durationToString(Duration.ZERO)
-                }
-                else {
+                } else {
                     timerTextView.text = Score.durationToString(Duration.ofMillis(timerValue))
                 }
             }
@@ -76,13 +76,21 @@ class TrackFragment : Fragment() {
 
         app = requireContext().applicationContext as HCRApplication
 
+        if (app.data.racer == null) {
+            app.recoverUserBySharedPrefs()
+        }
+
         track = app.data.tracks[args.index]
 
         // difficulty bubble
         _binding!!.displayDifficulty.text = track.difficulty.value.toString()
         when (track.difficulty.value) {
-            DifficultyEnum.HARD.value -> _binding!!.displayDifficulty.background.setTint(requireContext().getColor(R.color.diff_hard))
-            DifficultyEnum.MEDIUM.value -> _binding!!.displayDifficulty.background.setTint(requireContext().getColor(R.color.diff_medium))
+            DifficultyEnum.HARD.value -> _binding!!.displayDifficulty.background.setTint(
+                requireContext().getColor(R.color.diff_hard)
+            )
+            DifficultyEnum.MEDIUM.value -> _binding!!.displayDifficulty.background.setTint(
+                requireContext().getColor(R.color.diff_medium)
+            )
             else -> _binding!!.displayDifficulty.background.setTint(requireContext().getColor(R.color.diff_easy))
         }
 
@@ -127,12 +135,15 @@ class TrackFragment : Fragment() {
         // submit button
         _binding!!.btnSubmit.visibility = View.INVISIBLE
         _binding!!.btnSubmit.setOnClickListener {
-            if(submitScore()) {
+            if (submitScore()) {
                 Navigation.findNavController(view)
                     .navigate(R.id.action_trackFragment_to_mainFragment)
-            }
-            else {
-                Toast.makeText(requireContext(), getString(R.string.profile_not_set_up), Toast.LENGTH_SHORT)
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.profile_not_set_up),
+                    Toast.LENGTH_SHORT
+                )
                     .show()
             }
         }
@@ -141,8 +152,12 @@ class TrackFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         val isRunning = app.sharedPref.getBoolean(getString(R.string.shr_pref_timer_running), false)
-        if(!isRunning) return
-        if(track.id.toString() != app.sharedPref.getString(getString(R.string.shr_pref_timer_track_id),null)) {
+        if (!isRunning) return
+        if (track.id.toString() != app.sharedPref.getString(
+                getString(R.string.shr_pref_timer_track_id),
+                null
+            )
+        ) {
             activity?.stopService(timerServiceIntent)
             running = false
             timerTextView.text = Score.durationToString(Duration.ZERO)
@@ -155,9 +170,13 @@ class TrackFragment : Fragment() {
         }
         running = true
         // Register the broadcast receiver
-        context?.registerReceiver(timerUpdateReceiver, IntentFilter(getString(R.string.TIMER_UPDATE_ACTION)))
-        val startTime: String? = app.sharedPref.getString(getString(R.string.shr_pref_timer_start), null)
-        if(startTime != null) {
+        context?.registerReceiver(
+            timerUpdateReceiver,
+            IntentFilter(getString(R.string.TIMER_UPDATE_ACTION))
+        )
+        val startTime: String? =
+            app.sharedPref.getString(getString(R.string.shr_pref_timer_start), null)
+        if (startTime != null) {
             start = LocalDateTime.parse(startTime, formatter)
         }
     }
@@ -179,8 +198,8 @@ class TrackFragment : Fragment() {
         _binding = null
     }
 
-    private fun isOnLocation(pt: Point): Boolean {
-        if(app.location == null) return false
+    private fun getLocationDistance(pt: Point): Float {
+        if (app.location == null) return Float.MAX_VALUE
         val phoneLoc = Location("phoneLoc")
         phoneLoc.longitude = app.location!!.longitude
         phoneLoc.latitude = app.location!!.latitude
@@ -189,19 +208,43 @@ class TrackFragment : Fragment() {
         trackLoc.longitude = pt.longitude
         trackLoc.latitude = pt.latitude
 
-        Log.i(TAG, "phoneLoc: " + phoneLoc.toString())
-        Log.i(TAG, "trackLoc: " + phoneLoc.toString())
+        var distanceInMeters = phoneLoc.distanceTo(trackLoc)
 
-        val distanceInMeters = phoneLoc.distanceTo(trackLoc)
+        if (distanceInMeters >= 5) {
+            distanceInMeters -= 5
+        }
 
-        Log.i(TAG, "distance: " + distanceInMeters + " meters")
-        return distanceInMeters <= 5
+        return distanceInMeters
     }
 
     private fun trackStart() {
-        if(!running && end == LocalDateTime.MIN) {
-            if(!isOnLocation(track.start)) {
-                Toast.makeText(requireContext(), "You're not on location", Toast.LENGTH_SHORT).show()
+        if (app.data.racer == null) {
+            Toast.makeText(
+                requireContext(),
+                getString(R.string.profile_not_set_up),
+                Toast.LENGTH_SHORT
+            ).show()
+            return
+        }
+
+        if (!(activity as MainActivity).checkLocationPermission()) {
+            Toast.makeText(
+                requireContext(),
+                getString(R.string.location_disabled),
+                Toast.LENGTH_SHORT
+            ).show()
+            return
+        }
+
+        if (!running && end == LocalDateTime.MIN) {
+            val distanceToStartPoint = getLocationDistance(track.start)
+            if (distanceToStartPoint > 0) {
+                Toast.makeText(
+                    requireContext(), String.format(
+                        getString(R.string.meters_away),
+                        distanceToStartPoint.roundToInt()
+                    ), Toast.LENGTH_SHORT
+                ).show()
                 return
             }
             start = LocalDateTime.now()
@@ -209,15 +252,24 @@ class TrackFragment : Fragment() {
             _binding!!.btnTimerReset.setBackgroundColor(requireContext().getColor(R.color.light_gray))
             _binding!!.btnTimerReset.isEnabled = false
             // Register the broadcast receiver
-            context?.registerReceiver(timerUpdateReceiver, IntentFilter(getString(R.string.TIMER_UPDATE_ACTION)))
+            context?.registerReceiver(
+                timerUpdateReceiver,
+                IntentFilter(getString(R.string.TIMER_UPDATE_ACTION))
+            )
             activity?.startService(timerServiceIntent)
         }
     }
 
     private fun trackEnd() {
-        if(running) {
-            if(!isOnLocation(track.finish!!)) {
-                Toast.makeText(requireContext(), "You're not on location", Toast.LENGTH_SHORT).show()
+        if (running) {
+            val distanceToFinishPoint = getLocationDistance(track.finish)
+            if (distanceToFinishPoint > 0) {
+                Toast.makeText(
+                    requireContext(), String.format(
+                        getString(R.string.meters_to_finish),
+                        distanceToFinishPoint.roundToInt()
+                    ), Toast.LENGTH_SHORT
+                ).show()
                 return
             }
             end = LocalDateTime.now()
@@ -232,9 +284,9 @@ class TrackFragment : Fragment() {
     }
 
     private fun submitScore(): Boolean {
-        if(app.data.racer == null) return false
-        val score = Score(app.data.racer!!.id,start,end)
-        app.addTrackScore(track.id,score)
+        if (app.data.racer == null) return false
+        val score = Score(app.data.racer!!.id, start, end)
+        app.addTrackScore(track.id, score)
         return true
     }
 }

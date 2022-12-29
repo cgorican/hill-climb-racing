@@ -58,6 +58,9 @@
     <string name="invalid_location_finish">Invalid finish location!</string>
     <string name="empty_fields">Fill out the fields!</string>
     <string name="profile_not_set_up">Profile setup required!</string>
+    <string name="location_disabled">Location service is disabled!</string>
+    <string name="meters_away">You are %d meters away!</string>
+    <string name="meters_to_finish">%d meters to finish!</string>
 
     <!-- SHARED PREFS -->
     <string name="path_shr_pref" translatable="false">ShrPref</string>

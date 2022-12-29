@@ -59,14 +59,6 @@ class HCRApplication : Application(), DefaultLifecycleObserver {
         editor = sharedPref.edit()
         setSessionId()
 
-        // init firebase
-        //FirebaseApp.initializeApp(this, options)
-        //database = FirebaseDatabase.getInstance()
-        database = Firebase.database.reference
-        refTracks = database.child("tracks")
-        refRacers = database.child("racers")
-
-
         gson = Gson()
         /*
         file = File(filesDir, getString(R.string.json_data_path))
@@ -87,9 +79,15 @@ class HCRApplication : Application(), DefaultLifecycleObserver {
          */
         data = TrackCollection()
 
+        // init firebase
+        //FirebaseApp.initializeApp(this, options)
+        //database = FirebaseDatabase.getInstance()
+        database = Firebase.database.reference
+        refTracks = database.child("tracks")
+        refRacers = database.child("racers")
+
         // listens for events and retrieves data
         initDatabaseListeners()
-
 
         // create notification channel
         val channel = NotificationChannel(
@@ -238,5 +236,23 @@ class HCRApplication : Application(), DefaultLifecycleObserver {
         refRacers.child(data.racer!!.id)
             .setValue(data.racer!!)
         return true
+    }
+
+    fun recoverUserBySharedPrefs() {
+        // check db for shared pref id
+        Log.i(TAG,"RecoveringUserProfile")
+        if(data.racer == null) {
+            val racerIdShrPref = sharedPref
+                .getString(getString(R.string.shr_pref_racer_id), null)
+            Log.i(TAG,"SHARED_PREF_RACER_ID: $racerIdShrPref")
+            Log.i(TAG, "${racers.size} racers present")
+            if(racerIdShrPref != null && racers.isNotEmpty()) {
+                val index = racers.indexOfFirst { it.id == racerIdShrPref }
+                if(index > -1) {
+                    data.racer = racers[index]
+                }
+                Log.i(TAG,data.racer.toString())
+            }
+        }
     }
 }
