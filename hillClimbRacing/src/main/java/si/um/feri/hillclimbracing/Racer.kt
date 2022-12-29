@@ -11,5 +11,5 @@ class Racer(
     var email: String,
     val birthdate: LocalDate
 ) : Serializable {
-    val id: UUID = UUID.randomUUID()
+    val id: String = UUID.randomUUID().toString()
 }

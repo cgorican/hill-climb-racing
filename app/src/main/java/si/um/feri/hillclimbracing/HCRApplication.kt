@@ -6,10 +6,13 @@ import android.app.NotificationManager
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.DefaultLifecycleObserver
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ProcessLifecycleOwner
 import com.google.firebase.database.*
+import com.google.firebase.database.ktx.database
+import com.google.firebase.database.ktx.getValue
+import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
@@ -44,8 +47,9 @@ class HCRApplication : Application(), DefaultLifecycleObserver {
         .setApiKey("AIzaSyBUpqyDukJXqmX0__nvkyuZD9ffpZyEr1A")
         .build()
      */
-    // realtime database (firebase)
-    private lateinit var database: FirebaseDatabase
+    // realtime (depression base) database (firebase)
+    //private lateinit var database: FirebaseDatabase
+    lateinit var database: DatabaseReference
     lateinit var refTracks: DatabaseReference
     lateinit var refRacers: DatabaseReference
 
@@ -59,9 +63,10 @@ class HCRApplication : Application(), DefaultLifecycleObserver {
 
         // init firebase
         //FirebaseApp.initializeApp(this, options)
-        database = FirebaseDatabase.getInstance()
-        refTracks = database.getReference("tracks")
-        refRacers = database.getReference("racers")
+        //database = FirebaseDatabase.getInstance()
+        database = Firebase.database.reference
+        refTracks = database.child("tracks")
+        refRacers = database.child("racers")
 
 
         gson = Gson()
@@ -72,12 +77,21 @@ class HCRApplication : Application(), DefaultLifecycleObserver {
         }
         */
 
-        // generate default data
-        data = TrackCollection.generateDefault()
-        // data = TrackCollection()
-        // saveTracks()
 
+        /**
+         * Generate default data
+         *
+         * data = TrackCollection.generateDefault()
+         * for(track in data.tracks) {
+         *  refTracks.child(track.id.toString())
+         *           .setValue(track)
+         * }
+         */
+        data = TrackCollection()
+
+        // listens for events and retrieves data
         initDatabaseListeners()
+
 
         // create notification channel
         val channel = NotificationChannel(
@@ -93,46 +107,26 @@ class HCRApplication : Application(), DefaultLifecycleObserver {
         // tracks
         refTracks.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                val dbTracks: String? = snapshot.getValue(String::class.java)
-                if(dbTracks != null) {
-                    val gson = Gson()
-
-                    var tracks: MutableList<Track>? = null
-                    try {
-                        val listType = object : TypeToken<MutableList<Track>>() {}.type
-                        tracks = gson.fromJson(dbTracks, listType)
-                    }
-                    catch(e: Exception) {
-                        Log.e(TAG, "Deserialization failed - MutableList<Track>")
-                    }
-                    if(tracks != null) {
-                        data.tracks.clear()
-                        data.tracks.addAll(tracks)
+                data.tracks.clear()
+                for (sps in snapshot.children) {
+                    val track = sps.getValue<Track>()
+                    if (track != null) {
+                        data.tracks.add(track)
                     }
                 }
             }
 
             override fun onCancelled(error: DatabaseError) {
                 // failed to read/write
-                Log.w(TAG, "Database error")
+                Log.w(TAG, "Database error - failed to read value")
             }
         })
         refTracks.addChildEventListener(object : ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                val dbTrack = snapshot.getValue(String::class.java)
+                val dbTrack = snapshot.getValue<Track>()
                 if(dbTrack != null) {
-                    val gson = Gson()
-
-                    var track: Track? = null
-                    try {
-                        track = gson.fromJson(dbTrack, Track::class.java)
-                    }
-                    catch(e: Exception) {
-                        Log.e(TAG, "Deserialization failed - Track")
-                    }
-                    if(track != null) {
-                        mainActivity?.displayNotification(track)
-                    }
+                    Log.i(TAG, "TrackAdded: "+dbTrack.toString())
+                    mainActivity?.displayNotification(dbTrack)
                 }
             }
 
@@ -160,6 +154,8 @@ class HCRApplication : Application(), DefaultLifecycleObserver {
         refRacers.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val dbRacers: String? = snapshot.getValue(String::class.java)
+                Log.i(TAG, "Racers: "+dbRacers.toString())
+                /*
                 if(dbRacers != null) {
                     val gson = Gson()
 
@@ -176,6 +172,7 @@ class HCRApplication : Application(), DefaultLifecycleObserver {
                         racers.addAll(racersList)
                     }
                 }
+                 */
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -185,22 +182,10 @@ class HCRApplication : Application(), DefaultLifecycleObserver {
         })
     }
 
-    private fun saveTracks() {
-        val tracks = serialize(data.tracks)
-        if(tracks != null) {
-            refTracks.setValue(tracks)
-        }
-    }
-
-    private fun saveRacers() {
-        val racers = serialize(racers)
-        if(racers != null) {
-            refTracks.setValue(racers)
-        }
-    }
+    // fun saveData() = writeJsonFile()
 
     private fun readJsonFile() {
-        val fileData: TrackCollection? = deserialize()
+        val fileData: TrackCollection? = deserializeJSONFile()
         if(fileData != null) data = fileData
     }
 
@@ -209,23 +194,6 @@ class HCRApplication : Application(), DefaultLifecycleObserver {
         if(jsonString != null) {
             file.writeText(jsonString)
         }
-    }
-
-    fun updateRacer() {
-        val index = racers.indexOfFirst { it.id == data.racer!!.id }
-        if(index == -1) {
-            racers.add(data.racer!!)
-        }
-        else {
-            racers[index] = data.racer!!
-        }
-    }
-
-    // fun saveData() = writeJsonFile()
-    fun saveData() = saveTracks()//writeJsonFile()
-    fun saveRacer() {
-        racers.add(data.racer!!)
-        this.saveRacers()
     }
 
     private fun serialize(value: Any): String? {
@@ -240,7 +208,7 @@ class HCRApplication : Application(), DefaultLifecycleObserver {
         return jsonString
     }
 
-    private fun deserialize(): TrackCollection? {
+    private fun deserializeJSONFile(): TrackCollection? {
         if(!file.exists()) return null
         val fileReader = FileReader(file)
         var carCollection: TrackCollection? = null
@@ -258,13 +226,35 @@ class HCRApplication : Application(), DefaultLifecycleObserver {
         editor.apply()
     }
 
-    override fun onResume(owner: LifecycleOwner) {
-        super.onResume(owner)
-        // track location - on
+    // Firebase operations
+    // Tracks
+    fun addTrack(track: Track) {
+        // data.addTrack(track) -maybe we dont need it
+        val trackRef = refTracks.child(track.id.toString())
+        trackRef.setValue(track)
     }
 
-    override fun onPause(owner: LifecycleOwner) {
-        super.onPause(owner)
-        // track location - off
+    fun putTrack(track: Track) {
+        val trackRef = refTracks.child(track.id.toString())
+        trackRef.setValue(track)
+        // data.updateTrack(track) -maybe we dont need it
+    }
+
+    fun addTrackScore(trackId: String, score: Score) {
+        // data.addTrackScore(trackId,score) -maybe we dont need it
+    }
+
+    fun deleteTrack(trackId: String) {
+        // data.deleteTrack(trackId) -maybe we dont need it
+    }
+
+    // Racers
+    fun updateRacer(): Boolean {
+        if(data.racer == null) return false
+        when(val index = racers.indexOfFirst { it.id == data.racer!!.id }) {
+            -1 -> racers.add(data.racer!!)
+            else -> racers[index] = data.racer!!
+        }
+        return true
     }
 }

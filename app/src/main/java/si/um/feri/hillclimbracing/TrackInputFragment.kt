@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -14,8 +13,6 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import si.um.feri.hillclimbracing.databinding.FragmentTrackInputBinding
 import si.um.feri.hillclimbracing.enums.DifficultyEnum
-import java.time.LocalDate
-import java.time.LocalDateTime
 
 class TrackInputFragment : Fragment() {
     private val TAG = TrackInputFragment::class.qualifiedName
@@ -67,7 +64,6 @@ class TrackInputFragment : Fragment() {
 
         _binding!!.btnSetTrack.setOnClickListener {
             if (submitTrack()) {
-                app.saveData()
                 Navigation.findNavController(view)
                     .navigate(R.id.action_trackInputFragment_to_mainFragment)
             }
@@ -157,13 +153,13 @@ class TrackInputFragment : Fragment() {
             track.difficulty = diff
             track.start = start
             track.finish = finish
-            app.data.updateTrack(track)
+            app.addTrack(track)
         } else if (desc.isEmpty()) {
             track = Track(title, diff, start, finish)
-            app.data.addTrack(track)
+            app.putTrack(track)
         } else {
             track = Track(title, diff, start, finish, desc)
-            app.data.addTrack(track)
+            app.putTrack(track)
         }
         return true
     }
@@ -174,7 +170,7 @@ class TrackInputFragment : Fragment() {
         builder.setTitle(getString(R.string.modal_delete_track_title))
         builder.setMessage(String.format(getString(R.string.modal_delete_track_desc),track.title))
         builder.setPositiveButton(getString(R.string.btn_delete)) { dialogInterface, it ->
-            app.data.removeTrack(track.id)
+            app.deleteTrack(track.id)
             Navigation.findNavController(view)
                 .navigate(R.id.action_trackInputFragment_to_mainFragment)
         }

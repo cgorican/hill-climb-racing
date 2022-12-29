@@ -25,6 +25,7 @@ import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import si.um.feri.hillclimbracing.databinding.ActivityMainBinding
+import java.util.*
 
 class MainActivity : AppCompatActivity(), LocationListener {
     private val TAG = MainActivity::class.qualifiedName

@@ -12,8 +12,12 @@ class Track(
     var finish: Point,
     var description: String = String()
 ) : Serializable {
-    val id: UUID = UUID.randomUUID()
+    val id: String = UUID.randomUUID().toString()
     var leaderboard: MutableList<Score> = mutableListOf()
+
+    constructor() : this("",DifficultyEnum.EASY,Point(0.0,0.0),Point(0.0,0.0),"")
+
+
 
     private fun order() {
         leaderboard.sortWith(compareBy<Score> {
@@ -35,7 +39,7 @@ class Track(
         order()
     }
 
-    fun removeScore(id: UUID) {
+    fun removeScore(id: String) {
         leaderboard.removeAt(leaderboard.indexOfFirst { it.id == id })
     }
 }

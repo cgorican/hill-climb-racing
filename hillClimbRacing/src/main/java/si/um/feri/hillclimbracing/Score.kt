@@ -5,10 +5,10 @@ import java.time.Duration
 import java.time.LocalDateTime
 import java.util.UUID
 
-class Score(val racerId: UUID, val startTime: LocalDateTime, val finishTime: LocalDateTime) :
+class Score(val racerId: String, val startTime: LocalDateTime, val finishTime: LocalDateTime) :
     Serializable,
     Comparable<Score> {
-    val id: UUID = UUID.randomUUID()
+    val id: String = UUID.randomUUID().toString()
 
     companion object {
         fun durationToString(duration: Duration): String {

@@ -128,7 +128,6 @@ class TrackFragment : Fragment() {
         _binding!!.btnSubmit.visibility = View.INVISIBLE
         _binding!!.btnSubmit.setOnClickListener {
             if(submitScore()) {
-                app.saveData()
                 Navigation.findNavController(view)
                     .navigate(R.id.action_trackFragment_to_mainFragment)
             }
@@ -217,7 +216,7 @@ class TrackFragment : Fragment() {
 
     private fun trackEnd() {
         if(running) {
-            if(!isOnLocation(track.finish)) {
+            if(!isOnLocation(track.finish!!)) {
                 Toast.makeText(requireContext(), "You're not on location", Toast.LENGTH_SHORT).show()
                 return
             }
@@ -235,7 +234,7 @@ class TrackFragment : Fragment() {
     private fun submitScore(): Boolean {
         if(app.data.racer == null) return false
         val score = Score(app.data.racer!!.id,start,end)
-        app.data.setTrackScore(track.id,score)
+        app.addTrackScore(track.id,score)
         return true
     }
 }

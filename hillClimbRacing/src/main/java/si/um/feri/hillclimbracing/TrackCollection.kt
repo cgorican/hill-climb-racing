@@ -72,11 +72,11 @@ class TrackCollection {
         else addTrack(track)
     }
 
-    fun removeTrack(id: UUID) {
+    fun deleteTrack(id: String) {
         tracks.removeAt(tracks.indexOfFirst { it.id == id })
     }
 
-    fun setTrackScore(trackId: UUID, score: Score) {
+    fun addTrackScore(trackId: String, score: Score) {
         tracks[tracks.indexOfFirst { it.id == trackId }].addScore(score)
     }
 }

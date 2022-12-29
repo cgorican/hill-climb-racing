@@ -5,12 +5,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import si.um.feri.hillclimbracing.adapters.TrackAdapter
 import si.um.feri.hillclimbracing.databinding.FragmentMainBinding
+import java.util.*
 
 class MainFragment : Fragment(), TrackAdapter.OnItemClickListener {
     private val TAG = MainFragment::class.qualifiedName

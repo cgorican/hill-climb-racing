@@ -10,7 +10,6 @@ import android.widget.Toast
 import androidx.navigation.Navigation
 import si.um.feri.hillclimbracing.databinding.FragmentRacerBinding
 import java.time.LocalDate
-import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 class RacerFragment : Fragment() {
@@ -93,7 +92,7 @@ class RacerFragment : Fragment() {
                 .edit()
                 .putString(getString(R.string.shr_pref_racer_id), racer.id.toString())
                 .apply()
-            app.saveRacer()
+            app.updateRacer()
         } else {
             app.data.racer!!.email = email
             app.updateRacer()
