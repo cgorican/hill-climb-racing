@@ -47,7 +47,6 @@ class RacerFragment : Fragment() {
         _binding?.btnSetRacer!!.setOnClickListener {
             if (submitProfile()) {
                 Log.i(TAG, "Profile updated")
-                app.saveData()
                 Navigation.findNavController(view)
                     .navigate(R.id.action_racerFragment_to_mainFragment)
             }
@@ -94,8 +93,10 @@ class RacerFragment : Fragment() {
                 .edit()
                 .putString(getString(R.string.shr_pref_racer_id), racer.id.toString())
                 .apply()
+            app.saveRacer()
         } else {
             app.data.racer!!.email = email
+            app.updateRacer()
         }
         return true
     }

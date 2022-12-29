@@ -67,9 +67,14 @@
     <string name="shr_pref_timer_running" translatable="false">TimerState</string>
     <string name="shr_pref_timer_track_id" translatable="false">TimerTrackId</string>
 
+    <!-- TIMER SERVICE -->
     <string name="TIMER_SERVICE_VAR" translatable="false">TIME_REMAINING</string>
     <string name="TIMER_UPDATE_ACTION" translatable="false">TIMER_UPDATE_ACTION</string>
     <string name="TIMER_VALUE" translatable="false">TIMER_VALUE</string>
+
+    <!-- NOTIFICATIONS -->
+    <string name="NOTIFICATIONS_CHANNEL_ID" translatable="false">HILL_CLIMB_RACING_NOTIFIER</string>
+    <string name="NOTIFICATION_NEW_TRACK" translatable="false">New track!</string>
 
     <string name="json_data_path" translatable="false">hcr_data.json</string>
 

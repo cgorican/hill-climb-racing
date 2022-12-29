@@ -2,10 +2,13 @@ package si.um.feri.hillclimbracing
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.NotificationManager
+import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
@@ -13,7 +16,7 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -21,7 +24,6 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.snackbar.Snackbar
 import si.um.feri.hillclimbracing.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity(), LocationListener {
@@ -40,6 +42,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
 
         // Global state
         app = application as HCRApplication
+        app.mainActivity = this
 
         // Toolbar
         val navHostFragment: NavHostFragment = supportFragmentManager
@@ -56,7 +59,12 @@ class MainActivity : AppCompatActivity(), LocationListener {
         // Bottom navigation
         binding.bottomNav.setupWithNavController(navController)
 
-        initLocationService()
+        // location
+        checkLocationPermissions()
+
+        // notifications
+        checkNotificationsPermissions()
+        Log.i(TAG,"Notification ${app.notificationsEnabled}")
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -72,7 +80,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
         ) == PackageManager.PERMISSION_GRANTED
 
     @SuppressLint("MissingPermission")
-    private fun initLocationService() {
+    private fun checkLocationPermissions() {
         requestLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
             if(isGranted) {
                 locationManager = getSystemService(LOCATION_SERVICE) as LocationManager
@@ -88,6 +96,18 @@ class MainActivity : AppCompatActivity(), LocationListener {
             }
         }
         requestLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+    }
+
+    private fun checkNotificationsPermissions() {
+        val notificationsLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+            app.notificationsEnabled = isGranted
+            if(!isGranted) {
+                Toast.makeText(this,"Notifications are disabled!",Toast.LENGTH_SHORT).show()
+            }
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            notificationsLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+        } else mutableSetOf(true)
     }
 
     override fun onLocationChanged(location: Location) {
@@ -122,5 +142,21 @@ class MainActivity : AppCompatActivity(), LocationListener {
                 listener
             )
         }
+    }
+
+    fun displayNotification(track: Track) {
+        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        if(!app.notificationsEnabled) return
+        val notification = NotificationCompat.Builder(applicationContext, getString(R.string.NOTIFICATIONS_CHANNEL_ID))
+            .setContentTitle(getString(R.string.NOTIFICATION_NEW_TRACK))
+            .setContentText("${track.title} ${track.description}")
+            .setSmallIcon(R.drawable.ic_launcher_foreground)
+            .build()
+        notificationManager.notify(1,notification)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        app.mainActivity = null
     }
 }
