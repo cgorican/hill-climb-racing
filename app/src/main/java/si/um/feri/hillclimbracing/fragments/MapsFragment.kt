@@ -1,4 +1,4 @@
-package si.um.feri.hillclimbracing
+package si.um.feri.hillclimbracing.fragments
 
 import android.annotation.SuppressLint
 import android.content.res.Resources
@@ -10,7 +10,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.clearFragmentResultListener
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
@@ -18,8 +17,10 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
-import kotlinx.coroutines.awaitAll
-import si.um.feri.hillclimbracing.databinding.FragmentMainBinding
+import si.um.feri.hillclimbracing.HCRApplication
+import si.um.feri.hillclimbracing.activities.MainActivity
+import si.um.feri.hillclimbracing.Point
+import si.um.feri.hillclimbracing.R
 import si.um.feri.hillclimbracing.databinding.FragmentMapsBinding
 
 class MapsFragment : Fragment(), LocationListener {

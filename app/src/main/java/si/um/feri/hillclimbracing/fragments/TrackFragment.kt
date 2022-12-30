@@ -1,4 +1,4 @@
-package si.um.feri.hillclimbracing
+package si.um.feri.hillclimbracing.fragments
 
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -16,6 +16,8 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import com.squareup.picasso.Picasso
+import si.um.feri.hillclimbracing.*
+import si.um.feri.hillclimbracing.activities.MainActivity
 import si.um.feri.hillclimbracing.databinding.FragmentTrackBinding
 import si.um.feri.hillclimbracing.enums.DifficultyEnum
 import si.um.feri.hillclimbracing.services.TimerService

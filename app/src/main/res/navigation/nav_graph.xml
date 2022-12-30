@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="si.um.feri.hillclimbracing.MainFragment"
+        android:name="si.um.feri.hillclimbracing.fragments.MainFragment"
         android:label="@string/title_tracks"
         tools:layout="@layout/fragment_main" >
         <action
@@ -25,7 +25,7 @@
     </fragment>
     <fragment
         android:id="@+id/mapsFragment"
-        android:name="si.um.feri.hillclimbracing.MapsFragment"
+        android:name="si.um.feri.hillclimbracing.fragments.MapsFragment"
         android:label="@string/title_map"
         tools:layout="@layout/fragment_maps" >
         <action
@@ -34,7 +34,7 @@
     </fragment>
     <fragment
         android:id="@+id/racerFragment"
-        android:name="si.um.feri.hillclimbracing.RacerFragment"
+        android:name="si.um.feri.hillclimbracing.fragments.RacerFragment"
         android:label="@string/title_profile_setup"
         tools:layout="@layout/fragment_racer" >
         <action
@@ -43,7 +43,7 @@
     </fragment>
     <fragment
         android:id="@+id/trackInputFragment"
-        android:name="si.um.feri.hillclimbracing.TrackInputFragment"
+        android:name="si.um.feri.hillclimbracing.fragments.TrackInputFragment"
         android:label="{title}"
         tools:layout="@layout/fragment_track_input" >
         <action
@@ -59,7 +59,7 @@
     </fragment>
     <fragment
         android:id="@+id/trackFragment"
-        android:name="si.um.feri.hillclimbracing.TrackFragment"
+        android:name="si.um.feri.hillclimbracing.fragments.TrackFragment"
         android:label="{title}"
         tools:layout="@layout/fragment_track" >
         <action

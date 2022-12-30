@@ -1,4 +1,4 @@
-package si.um.feri.hillclimbracing
+package si.um.feri.hillclimbracing.fragments
 
 import android.os.Bundle
 import android.util.Log
@@ -11,6 +11,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
+import si.um.feri.hillclimbracing.HCRApplication
+import si.um.feri.hillclimbracing.Point
+import si.um.feri.hillclimbracing.R
+import si.um.feri.hillclimbracing.Track
 import si.um.feri.hillclimbracing.databinding.FragmentTrackInputBinding
 import si.um.feri.hillclimbracing.enums.DifficultyEnum
 

@@ -1,4 +1,4 @@
-package si.um.feri.hillclimbracing
+package si.um.feri.hillclimbracing.activities
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -24,8 +24,11 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import si.um.feri.hillclimbracing.HCRApplication
+import si.um.feri.hillclimbracing.Point
+import si.um.feri.hillclimbracing.R
+import si.um.feri.hillclimbracing.Track
 import si.um.feri.hillclimbracing.databinding.ActivityMainBinding
-import java.util.*
 
 class MainActivity : AppCompatActivity(), LocationListener {
     private val TAG = MainActivity::class.qualifiedName

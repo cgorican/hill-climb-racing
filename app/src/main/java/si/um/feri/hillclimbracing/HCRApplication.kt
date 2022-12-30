@@ -14,6 +14,7 @@ import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import si.um.feri.hillclimbracing.activities.MainActivity
 import java.io.File
 import java.io.FileReader
 import java.util.*
@@ -35,7 +36,6 @@ class HCRApplication : Application(), DefaultLifecycleObserver {
 
 
     val id: UUID = UUID.randomUUID()
-
 
     /*
     //val options = FirebaseOptions.fromResource(this)

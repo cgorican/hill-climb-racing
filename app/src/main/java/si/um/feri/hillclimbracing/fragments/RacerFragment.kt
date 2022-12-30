@@ -1,4 +1,4 @@
-package si.um.feri.hillclimbracing
+package si.um.feri.hillclimbracing.fragments
 
 import android.os.Bundle
 import android.util.Log
@@ -8,6 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.Navigation
+import si.um.feri.hillclimbracing.HCRApplication
+import si.um.feri.hillclimbracing.R
+import si.um.feri.hillclimbracing.Racer
 import si.um.feri.hillclimbracing.databinding.FragmentRacerBinding
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
