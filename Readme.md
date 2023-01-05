@@ -1,18 +1,13 @@
 # Hill Climb Racing
-<i>II. aplikacija pri predmetu PORA</i><br/>
-<b>Avtor:</b> Črt Goričan
+*My second android application*
 
-## Opis
-Aplikacija na zemljevidu prikaže štartne in končne točke (hribi).<br/>
-Ko se uporabnik premakne iz začetne točke se prične merjenje časa in konča ko doseže vrh.<br/>
-Na koncu, da svoj čas potrdi mora dodati tudi sliko.
+The application shows the start and end points (hills) on the map.
+When the user moves from the starting point, the time starts and the timer stops when the finish is reached.
+The users can compete with each other.
 
-## Namen
-Aplikacija je namenjena spodbujanju k športu.
-
-
-## Tehnologije
+## Technologies
 - Kotlin
-- Android
+- Android (13)
 - Mobile GPS Location
 - Picasso
+- Firebase (Realtime database)
