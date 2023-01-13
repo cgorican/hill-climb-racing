@@ -3,7 +3,6 @@
 
 The application shows the start and end points (hills) on the map.
 When the user moves from the starting point, the time starts and the timer stops when the finish is reached.
-The users can compete with each other.
 
 ## Technologies
 - Kotlin
